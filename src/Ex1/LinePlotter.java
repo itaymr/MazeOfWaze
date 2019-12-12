@@ -20,6 +20,15 @@ import de.*;
 
 public class LinePlotter extends JFrame{
 
+	/**
+	 * 
+	 * @param width - window width
+	 * @param height - window height
+	 * @param rx - Range for x axis
+	 * @param ry Range for y Axis
+	 * @param resolution - currently unavailable as it automatically rescales(can be anything)
+	 * @param functions - the linked list of functions to draw into the map
+	 */
 	public LinePlotter(int width, int height, Range rx, Range ry, int resolution, LinkedList<function> functions) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(width, height);
