@@ -84,15 +84,27 @@ class complexFunctionTest {
 	}
 	@Test
 	void test_max() {
-		
+		ComplexFunction actual = new ComplexFunction("3x");
+		ComplexFunction actual2 = new ComplexFunction("4x");
+		actual.max(actual2);
+		Assert.assertEquals(actual2.f(1), actual.f(1));
 	}
 	@Test
 	void test_min() {
+		ComplexFunction actual = new ComplexFunction(c6);
+		ComplexFunction actual2 = new ComplexFunction(c7);
 		
 	}
 	@Test
 	void test_comp() {
 		
+		ComplexFunction cf1 = new ComplexFunction("x + 2");
+		ComplexFunction cf2 = new ComplexFunction("x + 2");
+		ComplexFunction cf3 = new ComplexFunction("x + 2");
+
+
+		cf1.comp(cf2);
+		System.out.println("Expected: 5: " + cf1.f(1));
 	}
 	@Test
 	void test_equals() {
