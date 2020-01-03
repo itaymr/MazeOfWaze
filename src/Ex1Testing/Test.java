@@ -4,17 +4,48 @@ import Ex1.ComplexFunction;
 import Ex1.Functions_GUI;
 import Ex1.Polynom;
 import Ex1.Range;
+import algorithms.Graph_Algo;
+import dataStructure.DGraph;
+import dataStructure.Node;
 
 public class Test {
 
 	
 	public static void main(String[] args)
 	{
-		testFunc();
-		testmult();
-		testdiv();
-		testplus();
-		testcomp();
+		testGraph();
+//		testFunc();
+//		testmult();
+//		testdiv();
+//		testplus();
+//		testcomp();
+	}
+	
+	
+	public static void testGraph()
+	{
+		DGraph graph = new DGraph();
+		Node n1 = new Node();
+		Node n2 = new Node();
+		Node n3 = new Node();
+		Node n4 = new Node();
+		Node n5 = new Node();
+		Node n6 = new Node();
+		
+		graph.addNode(n1);
+
+
+
+
+
+
+
+
+		
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(graph);
+		
+		System.out.println("Graph is connected:" +  ga.isConnected());
 	}
 	public static void testFunc()
 	{

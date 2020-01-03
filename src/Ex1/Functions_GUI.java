@@ -1,9 +1,12 @@
 package Ex1;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -105,8 +108,8 @@ public class Functions_GUI implements functions {
 		
 		Gson gson = new Gson();
 		FileReader fr = new FileReader(file);
-		toArray();
-		
+		//ֿtoArray();
+		gson.fromJson(fr, (Type) _functions);
 		System.out.println("functions:" +_functions);
 		fr.close();		
 		this.drawFunctions();
@@ -119,14 +122,54 @@ public class Functions_GUI implements functions {
 		FileWriter fw = new FileWriter(file);
 		gson.toJson(_functions, fw);
 
-
 		fw.close();
 	}
 
-	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
-		LinePlotter frame = new LinePlotter(width, height, rx, ry, resolution, _functions);
-		frame.setVisible(true);
+		//////Drawing Axis
+		StdDraw.setCanvasSize(width, height);
+		StdDraw.setXscale(rx.get_min(), rx.get_max());
+		StdDraw.setYscale(ry.get_min(), ry.get_max());
+		StdDraw.setPenColor(Color.LIGHT_GRAY);
+		for (double i = rx.get_min(); i <= rx.get_max(); i++) {
+			StdDraw.line(i, ry.get_min(), i, ry.get_max());
+		}
+		for (double i = ry.get_min(); i <= ry.get_max(); i++) {
+			StdDraw.line(rx.get_min(), i, rx.get_max(), i);
+		}
+
+		StdDraw.setPenColor(Color.BLACK);
+		StdDraw.setPenRadius(0.005);
+		//////Numbers on Axis
+		StdDraw.setFont(new Font("Ariel", Font.BOLD, 14));
+		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
+		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
+
+		for (double i = rx.get_min(); i <= rx.get_max(); i++) {
+			StdDraw.text(i, -0.30, Integer.toString(Math.toIntExact((long) i)));
+		}
+		for (double i = ry.get_min(); i <= ry.get_max(); i++) {
+			StdDraw.text(-0.20,i, Integer.toString(Math.toIntExact((long) i)));
+		}
+		//////End of Drawing Axis
+		int d=1;
+		for (function f : _functions) {
+			double step = (Math.abs(rx.get_min())+Math.abs(rx.get_max()))/resolution;
+			int R = (int)(Math.random()*256);
+			int G = (int)(Math.random()*256);
+			int B= (int)(Math.random()*256);
+			Color color = new Color(R, G, B);
+			StdDraw.setPenColor(color);
+			for (double i = rx.get_min(); i < rx.get_max(); i+=step)
+			{
+				StdDraw.line(i, f.f(i), i+step, f.f(i+step));
+			}
+			System.out.print(d+") "+"Color[R="+R+", G="+G+", B="+B+"] - f(x) = ");
+			System.out.println(f.toString());
+
+			d++;
+		}
+
 	}
 
 	@Override
@@ -140,6 +183,7 @@ public class Functions_GUI implements functions {
 			int height = (int)jo.get("height");
 			String rangey = (String)jo.get("Range_Y");
 			String rangex = (String)jo.get("Range_X");
+			int resolution = (int)jo.get("resolution");
 
 			//[10, -10]
 			double ymin, ymax, xmax, xmin;
@@ -152,7 +196,7 @@ public class Functions_GUI implements functions {
 			Range ry = new Range(ymin, ymax);
 			Range rx = new Range(xmin, xmax);
 
-			this.drawFunctions(width, height, rx, ry, 0);
+			this.drawFunctions(width, height, rx, ry, resolution);
 
 
 		}

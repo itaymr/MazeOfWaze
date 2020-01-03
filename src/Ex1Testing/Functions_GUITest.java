@@ -37,9 +37,8 @@ class Functions_GUITest {
 		int w=1000, h =600, res=200;
 		Range rx = new Range(-10,10);
 		Range ry = new Range(-5,15);
-		data.drawFunctions(w,h,rx,ry,res);
-		data.saveToFile("/Users/itaymeiri/NewFolder/Functions_GUI.json");
-		data.initFromFile("/Users/itaymeiri/NewFolder/Functions_GUI.json");
+		data.drawFunctions(w, h, rx, ry, 1000);
+		data.saveToFile("/Users/itaymeiri/Workspace 1/functions.json");
 	}
 	private Functions_GUI _data=null;
 //	@BeforeAll
