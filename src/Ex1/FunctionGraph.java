@@ -12,6 +12,8 @@ package Ex1;
 
 import java.awt.Color;
 import java.awt.Font;
+import utils.StdDraw;
+
 public class FunctionGraph {
 	public static void main(String[] args) {
 		// number of line segments to plot

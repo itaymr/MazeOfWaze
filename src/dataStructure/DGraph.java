@@ -130,9 +130,11 @@ public node_data removeNode(int key) {
 		return modeCounter;
 	}
 
-	public LinkedList<Node> adjacentNodes(Node current) {
+	public LinkedList<Node> adjacentNodes(Node current) throws NullPointerException {
 		
 		Iterator<edge_data> it = this.getE(current.getKey()).iterator();
+		
+
 		LinkedList<Node> list = new LinkedList();
 		while(it.hasNext())
 		{
@@ -142,6 +144,11 @@ public node_data removeNode(int key) {
 		}
 		
 		return list;
+	}
+
+	public double length(Node u, Node adj) {
+		
+		return this.getEdge(u.getKey(), adj.getKey()).getWeight();
 	}
 
 

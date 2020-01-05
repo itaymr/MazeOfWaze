@@ -17,6 +17,9 @@ import org.json.simple.parser.ParseException;
 
 import com.google.gson.Gson;
 
+import dataStructure.DGraph;
+import utils.StdDraw;
+
 public class Functions_GUI implements functions {
 
 	private LinkedList<function> _functions = new LinkedList<function>();
@@ -145,6 +148,8 @@ public class Functions_GUI implements functions {
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
 
+		
+		
 		for (double i = rx.get_min(); i <= rx.get_max(); i++) {
 			StdDraw.text(i, -0.30, Integer.toString(Math.toIntExact((long) i)));
 		}

@@ -72,6 +72,10 @@ public class Node implements node_data {
 		this.info=s;
 		
 	}
+	public void setInfo(int s) {
+		this.info=Integer.toString(s);
+		
+	}
 
 	@Override
 	public int getTag() {

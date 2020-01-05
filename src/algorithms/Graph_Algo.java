@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -23,45 +24,47 @@ import dataStructure.node_data;
  */
 public class Graph_Algo implements graph_algorithms{
 
-	
+
 	private DGraph dgraph;
-	
-    Queue<node_data> nodeQueue = new LinkedList<>();
-    
+
+	Queue<node_data> nodeQueue = new LinkedList<>();
+
 	@Override
 	public void init(graph g) {
-		
+
 		dgraph = (DGraph) g;
 	}
 
+	
+	
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-/**
- * Uses a non-recursive implementation of depth-first-search to mark all connected nodes.
- */
-	
-	
-	
+	/**
+	 * Uses a non-recursive implementation of depth-first-search to mark all connected nodes.
+	 */
+
+
+
 	public boolean DFS(Node nd)
 	{
-		
+
 		Stack<node_data> stack = new Stack<node_data>();
 		stack.push(nd);
-		
+
 		while(!stack.isEmpty())
 		{
 			Node w = (Node) stack.pop();
-			
+
 			if(w.getTag() == 0) // the node has not been seen before
 			{
 				w.setTag(1);
@@ -80,11 +83,11 @@ public class Graph_Algo implements graph_algorithms{
 					Edge next = (Edge) it.next();
 					stack.push(dgraph.getNode(next.getDest()));
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		for(node_data n: dgraph.getV())
 		{
 			if(n.getTag() == 0)
@@ -93,107 +96,172 @@ public class Graph_Algo implements graph_algorithms{
 			}
 			n.setTag(0); // resets the node
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean isConnected() {
+
 		
+		Collection<node_data> col = dgraph.getV();
 		
-		for(node_data nd: dgraph.getV())
-		{
-			nd.setTag(0); // resets the node
-		}
-		return DFS((Node) dgraph.getV().iterator().next());
+		System.out.println(dgraph.getV());
+		return DFS((Node) col.iterator().next());
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//	
-//	Stack<node_data> stack = new Stack<node_data>();
-//	
-//	stack.push(dgraph.getV().iterator().next()); // push first node
-//	
-//	while(!stack.isEmpty())
-//	{
-//		Node v = (Node)stack.pop();
-//		if(v.getTag() == 0)
-//		{
-//			v.setTag(1);
-//			
-//			for(node_data w: dgraph.getV())
-//			{
-//				stack.push(w);
-//			}
-//		}
-//  }
-	
-//	for(node_data nd: dgraph.getV())
-//	{
-//		if(nd.getTag() == 0)
-//		{
-//			return false;
-//		}
-//		nd.setTag(0); // resets the node
-//	}
-//	
-//	
-//	return true;
-//	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+	//	
+	//	Stack<node_data> stack = new Stack<node_data>();
+	//	
+	//	stack.push(dgraph.getV().iterator().next()); // push first node
+	//	
+	//	while(!stack.isEmpty())
+	//	{
+	//		Node v = (Node)stack.pop();
+	//		if(v.getTag() == 0)
+	//		{
+	//			v.setTag(1);
+	//			
+	//			for(node_data w: dgraph.getV())
+	//			{
+	//				stack.push(w);
+	//			}
+	//		}
+	//  }
+
+	//	for(node_data nd: dgraph.getV())
+	//	{
+	//		if(nd.getTag() == 0)
+	//		{
+	//			return false;
+	//		}
+	//		nd.setTag(0); // resets the node
+	//	}
+	//	
+	//	
+	//	return true;
+	//	
+
+
+
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		// TODO Auto-generated method stub
-		return 0;
+		this.Dijkstra(src);
+		
+		return dgraph.getNode(dest).getWeight();
+		
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		
-		Set<Node> nodeSet;
+				
 		
+		return myList;
 		
-		
-		
-		// TODO Auto-generated method stub
-		return null;
 	}
-	
-	public void Dijkstra(int src, Set<Node> set)
-	{
-		set.addAll((Collection<? extends Node>) dgraph.getV());
-		for(Node n: set)
-		{
-			if(n.getKey() != src)
-			{
-				n.setTag(Integer.MAX_VALUE);
-			}
-			else
-			{
-				n.setTag(0);
-			}
-		}
-		
+
+	private Node min(LinkedList<Node> adjacentNodes) {
 		Iterator<node_data> it = dgraph.getV().iterator();
+		Node min = null;
 		while(it.hasNext())
 		{
-			Node current = (Node) it.next();
-			for(Node adj: dgraph.adjacentNodes(current))
+			Node temp = (Node) it.next();
+			if(min.getWeight() > temp.getWeight())
 			{
-				
+				min = temp;
 			}
 			
 		}
-	
+		
+		return min;
+	}
+
+
+
+	public Node min(Collection<node_data> mySet)
+	{
+		
+		
+		Iterator<node_data> it = mySet.iterator();
+		Node min = (Node) it.next();
+		while(it.hasNext())
+		{
+			Node temp = (Node) it.next();
+			if(temp.getWeight() < min.getWeight())
+			{
+				min = temp;
+			}	
+		}
+		
+		return min;
+	}
+
+	public void Dijkstra(int src)
+	{
+
+		//initialization
+
+		Iterator<node_data> it = dgraph.getV().iterator();
+
+		while(it.hasNext())
+		{
+			Node temp = (Node) it.next();
+			if(temp.getKey() == src)
+			{
+				temp.setWeight(0);
+			}
+			else
+			{
+				temp.setWeight(Double.MAX_VALUE);
+			}
+		}
+
+		Node optimal = null;
+		LinkedList<node_data> mySet = new LinkedList<node_data>();
+		
+		mySet.addAll(dgraph.getV());
+		String best;
+		while(!mySet.isEmpty())
+		{
+
+			Node u = min(mySet);
+			mySet.remove(u);
+
+			try {
+				dgraph.adjacentNodes(u);
+			}
+			catch(NullPointerException e){
+				continue;
+			}
+			for(Node adj: dgraph.adjacentNodes(u))
+			{
+				if(!mySet.contains(adj))
+				{
+					continue;
+				}
+				double alt = u.getWeight() + dgraph.length(u, adj);
+				if(alt < adj.getWeight())
+				{
+					adj.setWeight(alt);
+				}
+
+
+			}
+
+
+
+		}
+
+
 	}
 
 
