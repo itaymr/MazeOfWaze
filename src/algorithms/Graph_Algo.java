@@ -1,9 +1,10 @@
 package algorithms;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -27,7 +28,6 @@ public class Graph_Algo implements graph_algorithms{
 
 	private DGraph dgraph;
 
-	Queue<node_data> nodeQueue = new LinkedList<>();
 
 	@Override
 	public void init(graph g) {
@@ -35,8 +35,8 @@ public class Graph_Algo implements graph_algorithms{
 		dgraph = (DGraph) g;
 	}
 
-	
-	
+
+
 	@Override
 	public void init(String file_name) {
 		// TODO Auto-generated method stub
@@ -102,9 +102,9 @@ public class Graph_Algo implements graph_algorithms{
 
 	public boolean isConnected() {
 
-		
+
 		Collection<node_data> col = dgraph.getV();
-		
+
 		System.out.println(dgraph.getV());
 		return DFS((Node) col.iterator().next());
 	}
@@ -155,41 +155,84 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public double shortestPathDist(int src, int dest) {
 		this.Dijkstra(src);
-		
+
 		return dgraph.getNode(dest).getWeight();
-		
+
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
+			
+		this.Dijkstra(src);
 		
-				
+		// get all Nodes that point towards dest
+		// from those, add the minimum weighted node to a list
+		// change dest to be the minimum one
+		// repeat until dest is equal to source
 		
-		return myList;
-		
-	}
-
-	private Node min(LinkedList<Node> adjacentNodes) {
-		Iterator<node_data> it = dgraph.getV().iterator();
-		Node min = null;
-		while(it.hasNext())
+		ArrayList<node_data> toReturn = new ArrayList<node_data>();
+		while(dest != src)
 		{
-			Node temp = (Node) it.next();
-			if(min.getWeight() > temp.getWeight())
+			ArrayList<node_data> temp = new ArrayList<node_data>();
+			for(node_data nd: dgraph.getV())
 			{
-				min = temp;
+				
+				try {
+					if(dgraph.getEdge(nd.getKey(), dest) != null) // if this is not null, then an edge is found
+					{
+						temp.add(nd);
+					}
+				}
+				catch(NullPointerException e){
+					continue;
+				}
+				
 			}
+			
+			
+			//now that all edges are found, we only save the minimum one in a  list.
+			if(temp.isEmpty()) // if temp is empty we don't have a valid path
+			{
+				return null;
+			}
+			else
+			{
+				node_data min = min(temp);
+				toReturn.add(min);
+				
+				//we change dest to be the minimum one, so we can repeat the process until we get to the src
+				
+				dest = min.getKey();
+			}
+
+
 			
 		}
 		
-		return min;
+
+		return toReturn;
+
 	}
 
+//	public node_data min(ArrayList<node_data> mySet) {
+//		
+//		node_data min = new Node();
+//		min.setWeight(Double.MAX_VALUE);
+//		for(node_data nd: mySet)
+//		{
+//			if(min.getWeight() > nd.getWeight())
+//			{
+//				min = nd;
+//			}
+//		}
+//		return min;
+//
+//
+//	}
 
 
 	public Node min(Collection<node_data> mySet)
 	{
-		
 		
 		Iterator<node_data> it = mySet.iterator();
 		Node min = (Node) it.next();
@@ -205,35 +248,47 @@ public class Graph_Algo implements graph_algorithms{
 		return min;
 	}
 
+
 	public void Dijkstra(int src)
 	{
 
 		//initialization
 
-		Iterator<node_data> it = dgraph.getV().iterator();
 
-		while(it.hasNext())
+		//1
+		for(node_data nd: dgraph.getV())
 		{
-			Node temp = (Node) it.next();
-			if(temp.getKey() == src)
+			if(nd.getKey() == src)
 			{
-				temp.setWeight(0);
+				nd.setWeight(0);
+				continue;
 			}
-			else
-			{
-				temp.setWeight(Double.MAX_VALUE);
-			}
+			nd.setWeight(Double.MAX_VALUE);
+			
 		}
-
-		Node optimal = null;
-		LinkedList<node_data> mySet = new LinkedList<node_data>();
 		
+		//2
+//		Iterator<node_data> it = dgraph.getV().iterator();
+//
+//		while(it.hasNext())
+//		{
+//			Node temp = (Node) it.next();
+//			if(temp.getKey() == src)
+//			{
+//				temp.setWeight(0);
+//			}
+//			else
+//			{
+//				temp.setWeight(Double.MAX_VALUE);
+//			}
+//		}
+
+		ArrayList<node_data> mySet = new ArrayList<node_data>();
+		double alt = 0;
 		mySet.addAll(dgraph.getV());
-		String best;
 		while(!mySet.isEmpty())
 		{
-
-			Node u = min(mySet);
+			node_data u = min(mySet);
 			mySet.remove(u);
 
 			try {
@@ -242,13 +297,14 @@ public class Graph_Algo implements graph_algorithms{
 			catch(NullPointerException e){
 				continue;
 			}
-			for(Node adj: dgraph.adjacentNodes(u))
+			for(edge_data e: dgraph.getE(u.getKey()))
 			{
+				node_data adj = dgraph.getNode(e.getDest());
 				if(!mySet.contains(adj))
 				{
 					continue;
 				}
-				double alt = u.getWeight() + dgraph.length(u, adj);
+				alt = u.getWeight() + e.getWeight();
 				if(alt < adj.getWeight())
 				{
 					adj.setWeight(alt);

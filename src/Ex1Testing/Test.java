@@ -8,16 +8,23 @@ import Ex1.Functions_GUI;
 import Ex1.Polynom;
 import Ex1.Range;
 import algorithms.Graph_Algo;
+import algorithms.Graph_GUI;
 import dataStructure.DGraph;
+import dataStructure.Edge;
 import dataStructure.Node;
 import dataStructure.node_data;
+import utils.Point3D;
 
 public class Test {
 
 	
 	public static void main(String[] args)
 	{
-		testGraph();
+//		testGraph();
+		//testGUI();
+
+		testGUIRandom();
+		
 //		testFunc();
 //		testmult();
 //		testdiv();
@@ -26,6 +33,99 @@ public class Test {
 	}
 	
 	
+	
+	
+	private static void testGUIRandom() {
+
+		DGraph dg = new DGraph();
+		Graph_Algo algo = new Graph_Algo();
+		
+		algo.init(dg);
+		Graph_GUI gui = new Graph_GUI(dg, algo);
+
+		for(int i = 0; i<100; i++)
+		{
+			Node n = new Node(new Point3D(Math.random(), Math.random(), Math.random()*5));
+			dg.addNode(n);
+		}
+		double max, min;
+		min = 0;
+		int randomx, randomy, randomWeight;
+		for(int i = 0; i<100; i++)
+		{
+			max = i;
+			randomx = (int) ( (Math.random() * ((max - min) + 1)) + min);
+			randomy = (int) ( (Math.random() * ((max - min) + 1)) + min);
+			randomWeight = (int) ( (Math.random() * ((20 - 1) + 1)) + 1);
+			
+			if(Math.random() > 0.5)
+			{
+				dg.connect(randomx, randomy, randomWeight);
+			}
+			if(i % 1000 == 0)
+			{
+				System.out.println(i);
+			}
+		}
+		
+		algo.Dijkstra(0);
+		
+		dg.connect(1, 2, 3);
+		dg.connect(2, 3, 3);
+		dg.connect(3, 4, 3);
+
+		
+	//	List<node_data> shortest = algo.shortestPath(0, 4);
+	
+
+		gui.init();
+		gui.drawGraph();
+
+		
+		
+		//gui.drawGraph();
+	}
+
+
+	private static void testGUI() {
+		
+		DGraph dg = new DGraph();
+		Graph_Algo al = new Graph_Algo();
+		al.init(dg);
+		//
+		Node n1 = new Node();
+		Node n2 = new Node();
+		Node n3 = new Node();
+		Node n4 = new Node();
+
+		Point3D p1 = new Point3D(0.2,0.3,0.4);
+		Point3D p2 = new Point3D(0.1,0.2,0.3);
+		Point3D p3 = new Point3D(0.5,0.7,0.9);
+		Point3D p4 = new Point3D(0.3,0.5,0.7);
+		
+		n1.setLocation(p1);
+		n2.setLocation(p2);
+		n3.setLocation(p3);
+		n4.setLocation(p4);
+
+		dg.addNode(n1);
+		dg.addNode(n2);
+		dg.addNode(n3);
+		dg.addNode(n4);
+
+		dg.connect(n1.getKey(), n2.getKey(), 3);
+		dg.connect(n1.getKey(), n3.getKey(), 2);
+		dg.connect(n2.getKey(), n3.getKey(), 3);
+		dg.connect(n2.getKey(), n4.getKey(), 3);
+		Graph_GUI gui = new Graph_GUI(dg, al);
+		
+		gui.drawGraph();
+		
+		
+		
+	}
+
+
 	public static void testGraph()
 	{
 		DGraph graph = new DGraph();

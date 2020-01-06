@@ -28,6 +28,10 @@ public class DGraph implements graph{
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
+		if(this.edges.get(src) == null)
+		{
+			return null;
+		}
 		return this.edges.get(src).get(dest);
 	}
 
@@ -130,15 +134,14 @@ public node_data removeNode(int key) {
 		return modeCounter;
 	}
 
-	public LinkedList<Node> adjacentNodes(Node current) throws NullPointerException {
+	public ArrayList<Node> adjacentNodes(node_data u) throws NullPointerException {
 		
-		Iterator<edge_data> it = this.getE(current.getKey()).iterator();
+		Iterator<edge_data> it = this.getE(u.getKey()).iterator();
 		
 
-		LinkedList<Node> list = new LinkedList();
+		ArrayList<Node> list = new ArrayList<Node>();
 		while(it.hasNext())
 		{
-			
 			list.add((Node) this.getNode(it.next().getDest()));
 			
 		}
@@ -146,7 +149,7 @@ public node_data removeNode(int key) {
 		return list;
 	}
 
-	public double length(Node u, Node adj) {
+	public double length(node_data u, node_data adj) {
 		
 		return this.getEdge(u.getKey(), adj.getKey()).getWeight();
 	}
