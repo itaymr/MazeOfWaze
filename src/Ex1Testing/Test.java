@@ -21,10 +21,8 @@ public class Test {
 	public static void main(String[] args)
 	{
 		testGraph();
-		//testGUI();
-
-//		testGUIRandom();
-		
+		testGUI();
+		testGUIRandom();
 //		testFunc();
 //		testmult();
 //		testdiv();
