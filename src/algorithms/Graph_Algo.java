@@ -29,6 +29,17 @@ public class Graph_Algo implements graph_algorithms{
 	private DGraph dgraph;
 
 
+	public Graph_Algo()
+	{
+		//requires init
+	}
+	public Graph_Algo(graph _graph) {
+		
+		dgraph = (DGraph) _graph;
+	}
+
+
+
 	@Override
 	public void init(graph g) {
 
@@ -102,8 +113,11 @@ public class Graph_Algo implements graph_algorithms{
 	public boolean isConnected() {
 
 
-		
 		Collection<node_data> col = dgraph.getV();
+		if(col.isEmpty())
+		{
+			return true;
+		}
 		return DFS((Node) col.iterator().next());
 	}
 

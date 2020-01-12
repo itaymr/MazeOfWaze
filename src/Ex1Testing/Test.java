@@ -8,11 +8,11 @@ import Ex1.Functions_GUI;
 import Ex1.Polynom;
 import Ex1.Range;
 import algorithms.Graph_Algo;
-import algorithms.Graph_GUI;
 import dataStructure.DGraph;
 import dataStructure.Edge;
 import dataStructure.Node;
 import dataStructure.node_data;
+import gui.Graph_GUI;
 import utils.Point3D;
 
 public class Test {
