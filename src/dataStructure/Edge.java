@@ -1,12 +1,17 @@
 package dataStructure;
 
-
 public class Edge implements edge_data{
 
 	private int src, dest, tag;
 	private double weight;
 	private String info;
 
+	/**
+	 * Constructs and edge with a source, dest keys and a weight
+	 * @param src - source key
+	 * @param dest - destination key
+	 * @param w - weight
+	 */
 	public Edge(int src, int dest, double w) {
 		this.src=src;
 		this.dest=dest;
@@ -15,6 +20,10 @@ public class Edge implements edge_data{
 		this.info="";
 	}
 
+	/**
+	 * Copy constructor
+	 * @param o the edge to copy
+	 */
 	public Edge(Edge o) {
 		this.src=o.src;
 		this.dest=o.dest;

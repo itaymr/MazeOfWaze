@@ -12,6 +12,9 @@ public class Node implements node_data {
 
 	private static int keyGeneretor = 0;
 	
+	/**
+	 * Constructs a Node with a key.
+	 */
 	public Node () {
 		this.key=keyGeneretor;
 		this.tag=0;
@@ -20,6 +23,10 @@ public class Node implements node_data {
 		keyGeneretor++;
 	}
 	
+	/**
+	 * Copy constructor
+	 * @param o - the other node to copy
+	 */
 	public Node (Node o) {
 		this.key=o.key;
 		this.tag=o.tag;
@@ -28,6 +35,10 @@ public class Node implements node_data {
 		this.location=o.location;
 	}
 
+	/**
+	 * Constructs a node with a location.
+	 * @param loc - Point3D location
+	 */
 	public Node (Point3D loc) {
 		this.key=keyGeneretor;
 		this.location=loc;

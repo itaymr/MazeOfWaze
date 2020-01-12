@@ -16,8 +16,11 @@ import dataStructure.node_data;
 import utils.StdDraw;
 
 public class Graph_GUI {
+	
+	//instance variables
 	private  DGraph g;
 	private Graph_Algo algo;
+	
 	
 	public Graph_GUI(DGraph gr, Graph_Algo algo) {
 		g = gr;
@@ -27,6 +30,10 @@ public class Graph_GUI {
 		StdDraw.setCanvasSize(800, 800);
 	}
 	
+	/**
+	 * removes node from the drawing. Doesn't affect the actual draw.
+	 * @param n - the node to remove
+	 */
 	public void remove(Node n)
 	{
 		double x = n.getLocation().x();

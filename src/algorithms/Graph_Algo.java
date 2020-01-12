@@ -39,22 +39,21 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public void init(String file_name) {
-		// TODO Auto-generated method stub
-
+		
+		
 	}
 
 	@Override
 	public void save(String file_name) {
-		// TODO Auto-generated method stub
-
+		
+		
 	}
-
+	
 	/**
 	 * Uses a non-recursive implementation of depth-first-search to mark all connected nodes.
+	 * @param nd - the Node to start with.
+	 * @return true iff the graph is connected. 
 	 */
-
-
-
 	public boolean DFS(Node nd)
 	{
 
@@ -103,9 +102,8 @@ public class Graph_Algo implements graph_algorithms{
 	public boolean isConnected() {
 
 
+		
 		Collection<node_data> col = dgraph.getV();
-
-		System.out.println(dgraph.getV());
 		return DFS((Node) col.iterator().next());
 	}
 
@@ -171,6 +169,8 @@ public class Graph_Algo implements graph_algorithms{
 		// repeat until dest is equal to source
 		
 		ArrayList<node_data> toReturn = new ArrayList<node_data>();
+		toReturn.add(dgraph.getNode(dest));
+
 		while(dest != src)
 		{
 			ArrayList<node_data> temp = new ArrayList<node_data>();
@@ -209,7 +209,7 @@ public class Graph_Algo implements graph_algorithms{
 			
 		}
 		
-
+		Collections.reverse(toReturn);
 		return toReturn;
 
 	}

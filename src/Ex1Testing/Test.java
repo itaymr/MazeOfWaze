@@ -20,10 +20,10 @@ public class Test {
 	
 	public static void main(String[] args)
 	{
-//		testGraph();
+		testGraph();
 		//testGUI();
 
-		testGUIRandom();
+//		testGUIRandom();
 		
 //		testFunc();
 //		testmult();
