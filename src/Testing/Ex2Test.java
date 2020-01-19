@@ -10,6 +10,7 @@ import algorithms.*;
 import dataStructure.*;
 import utils.*;
 import gui.*;
+import dataStructure.DGraph;
 
 /**
  * EX2 Structure test:

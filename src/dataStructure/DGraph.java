@@ -6,13 +6,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.json.JSONObject;
+import org.json.simple.JSONArray;
+
+import gui.GraphGUI;
+import utils.Point3D;
+
 public class DGraph implements graph{
 
 	int modeCounter = 0 ;
 	int edgeCounter = 0 ;
-	HashMap<Integer,node_data> nodes = new HashMap<Integer,node_data>();
-	HashMap<Integer,HashMap<Integer,edge_data>> edges =new HashMap<Integer,HashMap<Integer,edge_data>>();
 
+	public HashMap<Integer,node_data> nodes = new HashMap<Integer,node_data>();
+	public HashMap<Integer,HashMap<Integer,edge_data>> edges =new HashMap<Integer,HashMap<Integer,edge_data>>();
+
+	public GraphGUI listener;
+	
 	
 	public DGraph () {
 		this.modeCounter = 0;
@@ -21,6 +30,48 @@ public class DGraph implements graph{
 		this.edges =new HashMap<Integer,HashMap<Integer,edge_data>>();
 	}
 
+	
+	public void init(String graph)
+	{
+		try {
+			JSONObject obj = new JSONObject(graph);
+			org.json.JSONArray edges = obj.getJSONArray("Edges");
+			org.json.JSONArray nodes = obj.getJSONArray("Nodes");
+			
+			for(int n = 0; n < nodes.length();n ++)
+			{
+				JSONObject currNode = (JSONObject) nodes.get(n);
+//				org.json.JSONArray pos = jobj.getJSONArray("pos");
+				
+				
+				String test[] = currNode.getString("pos").split(",");
+				
+				double x = Double.parseDouble(test[0]);
+				double y = Double.parseDouble(test[1]);
+				double z = Double.parseDouble(test[2]);
+
+				Point3D point = new Point3D(x, y, z);
+				this.addNode(new Node(point));
+			}
+			
+			
+			for(int e = 0; e < edges.length(); e++)
+			{
+				JSONObject currEdge = (JSONObject) edges.get(e);
+				this.connect(
+						currEdge.getInt("src"),
+						currEdge.getInt("dest"),
+						currEdge.getInt("w")
+						);
+			}
+		}catch(Exception e)
+		{
+			System.out.println("Error init: " + e);
+		}
+		
+		
+		
+	}
 	@Override
 	public node_data getNode(int key) {
 		return this.nodes.get(key);
@@ -152,6 +203,12 @@ public node_data removeNode(int key) {
 	public double length(node_data u, node_data adj) {
 		
 		return this.getEdge(u.getKey(), adj.getKey()).getWeight();
+	}
+
+
+	public void addListener(GraphGUI graphGUI) {
+		
+		this.listener = graphGUI;
 	}
 
 

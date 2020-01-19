@@ -1,10 +1,14 @@
 package gui;
 
 import java.awt.Color;
-
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import algorithms.Graph_Algo;
 import dataStructure.DGraph;
@@ -15,19 +19,23 @@ import dataStructure.graph;
 import dataStructure.node_data;
 import utils.StdDraw;
 
-public class Graph_GUI {
+public class Graph_GUI extends JFrame implements ActionListener {
 	
 	//instance variables
-	private  DGraph g;
+	private  Graphics g;
 	private Graph_Algo algo;
 	
 	
 	public Graph_GUI(DGraph gr, Graph_Algo algo) {
-		g = gr;
+		
+		this.g = gr;
 		this.algo = algo;
 	}
 	public void init() {
+		
 		StdDraw.setCanvasSize(800, 800);
+		StdDraw.setScale(-100, 100);
+
 	}
 	
 	/**
@@ -53,12 +61,12 @@ public class Graph_GUI {
 		double x = nd.getLocation().x();
 		double y = nd.getLocation().y();
 		
-		double radius = 0.01;
+		double radius = 0.009;
 		StdDraw.setPenColor(Color.BLUE);
 		StdDraw.circle(x, y,radius);
 		StdDraw.filledCircle(x, y,radius);
 		StdDraw.setPenColor(Color.BLUE);
-		StdDraw.setPenRadius(0.001);
+		StdDraw.setPenRadius(0.009);
 		StdDraw.text(x, y + 0.025, Integer.toString(nd.getKey()));
 		StdDraw.setPenRadius();
 
@@ -88,6 +96,8 @@ public class Graph_GUI {
 		StdDraw.setPenRadius();	
 	}
 	public void drawGraph() {
+		super.paint(g); 
+		
 		for(node_data nd : g.getV())
 		{
 			drawNode(nd);
@@ -180,5 +190,15 @@ public class Graph_GUI {
 		StdDraw.setPenRadius(0.1);
 		StdDraw.text(x, y + 0.025, Integer.toString(nd.getKey()));
 		StdDraw.setPenRadius();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+	
+	
+	public void update()
+	{
+		repaint();
 	}
 	}

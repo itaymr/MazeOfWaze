@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import Ex1.ComplexFunction;
 import algorithms.Graph_Algo;
-import dataStructure.DGraph;
 import dataStructure.Node;
+import dataStructure.DGraph;
 import dataStructure.node_data;
 import gui.Graph_GUI;
 import utils.Point3D;

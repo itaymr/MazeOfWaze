@@ -1,36 +1,76 @@
 package Ex1Testing;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import Ex1.ComplexFunction;
 import Ex1.Functions_GUI;
 import Ex1.Polynom;
 import Ex1.Range;
 import algorithms.Graph_Algo;
-import dataStructure.DGraph;
 import dataStructure.Edge;
 import dataStructure.Node;
+import dataStructure.DGraph;
 import dataStructure.node_data;
+import gui.GraphGUI;
 import gui.Graph_GUI;
 import utils.Point3D;
+import utils.StdDraw;
 
 public class Test {
 
 	
 	public static void main(String[] args)
 	{
-		testGraph();
-		testGUI();
-		testGUIRandom();
-//		testFunc();
+		
+		revamped();
+//		testDraw();
+//		testGraph();
+//		testGUI();
+//		testGUIRandom();
+////		testFunc();
 //		testmult();
 //		testdiv();
 //		testplus();
 //		testcomp();
 	}
 	
+	public static void testDraw()
+	{
+		StdDraw.setScale(0, 100);
+		StdDraw.circle(5, 5, 0.1);
+		StdDraw.circle(5, 5, 1);
+		StdDraw.circle(10, 10, 10);
+
+
+		
+	}
 	
+	public static void revamped()
+	{
+		
+		DGraph dg = new DGraph();
+		
+		Node n1 = new Node();
+		Point3D p1 = new Point3D(0.2,0.3,0.4);
+		n1.setLocation(p1);
+		dg.addNode(n1);
+		GraphGUI gui = new GraphGUI(dg);
+
+		gui.init(dg);
+//		gui.init(dg);
+		
+		
+		
+
+		
+		
+	}
 	
 	
 	private static void testGUIRandom() {
@@ -100,13 +140,16 @@ public class Test {
 		Point3D p2 = new Point3D(0.1,0.2,0.3);
 		Point3D p3 = new Point3D(0.5,0.7,0.9);
 		Point3D p4 = new Point3D(0.3,0.5,0.7);
-		
+
 		n1.setLocation(p1);
+
 		n2.setLocation(p2);
 		n3.setLocation(p3);
 		n4.setLocation(p4);
 
+
 		dg.addNode(n1);
+
 		dg.addNode(n2);
 		dg.addNode(n3);
 		dg.addNode(n4);
